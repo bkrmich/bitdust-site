@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BitDust — Official</title>
+  <meta name="description" content="BitDust (BTD) — fixed supply (10,000) Solana token. Buy on Raydium. Verify the official contract. Download the White Paper." />
+  <style>
+    :root{
+      --bg:#0b0b0c; --card:#121216; --text:#f5f5f7; --muted:#c7c7cc; --line:#1f1f24;
+      --accent:#f0c14b; --accentText:#1a1a1a; --maxW:1100px;
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0; font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; color:var(--text); background:var(--bg)}
+    a{color:var(--accent); text-decoration:none} a:hover{text-decoration:underline}
+    .wrap{max-width:var(--maxW); margin:0 auto; padding:20px}
+
+    /* Top row: logo left, coin right */
+    header{display:grid; grid-template-columns:1fr 1fr; gap:16px; align-items:center}
+    .brand{display:flex; align-items:center; gap:14px; min-width:0}
+    .brand img{display:block; max-width:100%; height:auto; max-height:140px}
+    .price{font-weight:600}
+    .coin{min-width:0}
+    .coin img{display:block; max-width:100%; height:auto; max-height:150px; margin-left:auto}
+
+    /* Buttons row */
+    .actions{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:16px}
+    .btn{display:inline-block; text-align:center; padding:12px 16px; border-radius:14px; font-weight:700; background:var(--accent); color:var(--accentText); border:0}
+    .btn:hover{filter:brightness(.95); text-decoration:none}
+    .btn:active{transform:translateY(1px)}
+
+    /* Contract */
+    .contract{margin:18px 0 8px; text-align:center}
+    .contract b{display:block; margin-bottom:6px}
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+    .copy-note{font-size:13px; color:var(--muted); text-align:center}
+
+    /* White paper link (clean text) */
+    .whitepaper{margin:14px 0 24px; text-align:center}
+
+    /* Bottom image (fixed small, centered) */
+    .tail-image{display:flex; justify-content:center; padding:24px 0 12px}
+    .tail-image img{max-width:360px; width:80%; height:auto; border-radius:12px; border:1px solid var(--line); box-shadow:0 10px 30px rgba(0,0,0,.25)}
+
+    /* Optional info panel */
+    .panel{background:var(--card); border:1px solid var(--line); border-radius:18px; padding:20px}
+
+    /* Mobile */
+    @media (max-width: 860px){
+      header{grid-template-columns:1fr}
+      .brand{justify-content:center; text-align:center}
+      .coin img{margin:0 auto; max-height:120px}
+      .actions{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <!-- Row 1: Logo left + coin right -->
+    <header aria-label="Top branding row">
+      <div class="brand">
+        <img src="assets/logo.jpeg" alt="BitDust Logo" />
+        <div>
+          <div class="price">Initial Offering Price: <span class="mono" id="io-price">$0.10</span></div>
+          <div style="color:var(--muted); font-size:13px; margin-top:4px;">Solana • Total Supply: 10,000 • Ticker: BTD</div>
+        </div>
+      </div>
+      <div class="coin">
+        <img src="assets/coin.jpg" alt="BitDust Coin" />
+      </div>
+    </header>
+
+    <!-- Row 2: three buttons evenly spaced -->
+    <div class="actions" aria-label="Primary actions">
+      <a class="btn" href="https://raydium.io/swap/?inputCurrency=sol&outputCurrency=6JvXx5usmEHXB3RZjjrk94mcxqAWpFXazSqe9RBSE26z" target="_blank" rel="noopener" aria-label="Buy on Raydium">Buy on Raydium</a>
+      <button class="btn" id="copyBtn" type="button" aria-label="Copy contract to clipboard">Copy Contract</button>
+      <a class="btn" href="BitDust_White_Paper.pdf" download aria-label="Download the BitDust White Paper">Download White Paper</a>
+    </div>
+
+    <!-- Row 3: contract -->
+    <div class="contract">
+      <b>BitDust Official Contract Address</b>
+      <div class="mono" id="contractText">6JvXx5usmEHXB3RZjjrk94mcxqAWpFXazSqe9RBSE26z</div>
+    </div>
+
+    <!-- Clean single white paper link -->
+    <div class="whitepaper">
+      <a href="BitDust_White_Paper.pdf" target="_blank" rel="noopener">Download BitDust White Paper</a>
+    </div>
+    <div class="copy-note" id="copyNote">Click “Copy Contract” to copy the address above.</div>
+
+    <!-- Optional info panel (kept minimal) -->
+    <section class="panel" style="margin-top:18px">
+      <h2 style="margin:0 0 10px; font-size:18px">How to Verify</h2>
+      <ol style="margin:0; padding-left:18px">
+        <li>Open Raydium and confirm the output token mint equals the contract above.</li>
+        <li>Confirm the token on Solscan matches the same mint.</li>
+        <li>Test a small swap first to validate routing and slippage.</li>
+      </ol>
+    </section>
+
+    <!-- Row 5: bottom image, fixed small and centered -->
+    <div class="tail-image" aria-label="Decorative image">
+      <img src="assets/gold-dust.png" alt="Gold dust image" />
+    </div>
+  </main>
+
+  <script>
+    // Copy-to-clipboard with feedback
+    const copyBtn = document.getElementById('copyBtn');
+    const contractText = document.getElementById('contractText');
+    const copyNote = document.getElementById('copyNote');
+    copyBtn?.addEventListener('click', async () => {
+      try{
+        await navigator.clipboard.writeText(contractText.textContent.trim());
+        copyBtn.textContent = 'Copied!';
+        copyNote.textContent = 'Contract copied to clipboard.';
+        setTimeout(()=>{ copyBtn.textContent = 'Copy Contract'; copyNote.textContent = 'Click “Copy Contract” to copy the address above.'; }, 1800);
+      }catch(e){
+        copyNote.textContent = 'Copy failed. Long-press or select the text to copy.';
+      }
+    });
+  </script>
+</body>
+</html>
