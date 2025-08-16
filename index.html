@@ -75,5 +75,90 @@
     .price{font-weight:600}
     .coin{min-width:0}
     .coin img{display:block; max-width:100%; height:auto; max-height:150px; margin-left:auto}
+<!-- ===== BITDUST CTA SECTION (paste under logo/coin) ===== -->
+<style>
+  .cta { max-width: 720px; margin: 0 auto; padding: 0 16px; }
+  .cta .stack { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .cta .btn {
+    display: block; width: 100%; text-align: center;
+    font-weight: 700; border-radius: 24px; padding: 18px 20px;
+    text-decoration: none; border: none; cursor: pointer;
+    background: #f6bf3a; color: #000;
+  }
+  .cta .btn:active { transform: translateY(1px); }
+  .cta .addr-wrap { margin-top: 18px; }
+  .cta .addr-label { font-weight: 800; font-size: 1.35rem; margin: 0 0 8px; }
+  .cta .addr-box {
+    display: grid; grid-template-columns: 1fr auto; gap: 10px;
+    background: #0f0f0f; border: 1px solid #292929; border-radius: 12px;
+    padding: 12px; overflow-wrap: anywhere; align-items: center;
+  }
+  .cta .addr-text {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    color: #ffd770;
+  }
+  .cta .copy-small {
+    padding: 10px 14px; border-radius: 10px; border: 1px solid #222;
+    background: #1a1a1a; color: #fff; font-weight: 700; cursor: pointer;
+  }
+</style>
 
+<div class="cta" id="bitdust-cta">
+  <div class="stack">
+    <!-- Raydium -->
+    <a class="btn"
+       href="https://raydium.io/swap/?inputCurrency=sol&outputCurrency=6JvXx5usmEHXB3RZjjrk94mcxqAWpFXazSqe9RBSE26z"
+       target="_blank" rel="noopener">
+      Buy on Raydium
+    </a>
+
+    <!-- Copy (big) -->
+    <button class="btn" id="copy-addr-big">Copy Contract</button>
+
+    <!-- Whitepaper -->
+    <a class="btn" href="whitepaper.pdf" target="_blank" rel="noopener">
+      Download White Paper
+    </a>
+
+    <!-- Jupiter -->
+    <a class="btn btn-jupiter"
+       href="https://jup.ag/swap/SOL-6JvXx5usmEHXB3RZjjrk94mcxqAWpFXazSqe9RBSE26z"
+       target="_blank" rel="noopener">
+      🪐 Buy on Jupiter
+    </a>
+  </div>
+
+  <!-- Contract address block -->
+  <div class="addr-wrap">
+    <h3 class="addr-label">BitDust Official Contract Address</h3>
+    <div class="addr-box">
+      <div class="addr-text" id="addr-text">
+        6JvXx5usmEHXB3RZjjrk94mcxqAWpFXazSqe9RBSE26z
+      </div>
+      <button class="copy-small" id="copy-addr-small">Copy</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    const ADDR = '6JvXx5usmEHXB3RZjjrk94mcxqAWpFXazSqe9RBSE26z';
+    const big = document.getElementById('copy-addr-big');
+    const small = document.getElementById('copy-addr-small');
+
+    async function doCopy(btn, originalText) {
+      try {
+        await navigator.clipboard.writeText(ADDR);
+        const was = btn.textContent;
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = originalText || was, 1400);
+      } catch (e) {
+        alert('Copy failed. Address:\n' + ADDR);
+      }
+    }
+    if (big) big.addEventListener('click', () => doCopy(big, 'Copy Contract'));
+    if (small) small.addEventListener('click', () => doCopy(small, 'Copy'));
+  })();
+</script>
+<!-- ===== END BITDUST CTA SECTION ===== -->
     
