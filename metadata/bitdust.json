@@ -1,0 +1,21 @@
+{
+  "name": "BitDust",
+  "symbol": "BTD",
+  "description": "BitDust (BTD) — fixed 10,000 supply on Solana. No staking, no yield; pure scarcity. Verified contract & white paper.",
+  "image": "https://bitdustcoin.io/coin.jpeg",
+  "external_url": "https://bitdustcoin.io",
+  "website": "https://bitdustcoin.io",
+  "whitepaper": "https://bitdustcoin.io/whitepaper.pdf",
+  "twitter": "https://twitter.com/michael18359876",
+  "attributes": [
+    { "trait_type": "Supply", "value": "10,000 fixed" },
+    { "trait_type": "Decimals", "value": "0" }
+  ],
+  "properties": {
+    "category": "token",
+    "files": [
+      { "uri": "https://bitdustcoin.io/coin.jpeg", "type": "image/jpeg" },
+      { "uri": "https://bitdustcoin.io/whitepaper.pdf", "type": "application/pdf" }
+    ]
+  }
+}
