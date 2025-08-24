@@ -122,6 +122,59 @@
         <div class="price-chip">
           Initial Offering Price: $0.10 per token
         </div>
+        <div style="display:flex; flex-direction:column; align-items:center; margin-top:20px;">
+
+  <!-- Initial Offering Price Container -->
+  <div style="background:#0d1b2a; padding:12px; border-radius:8px; font:600 18px/1.2 system-ui; color:#ffd700; max-width:300px; text-align:center; margin-bottom:10px; width:100%;">
+    Initial Offering Price: $0.10 per token
+  </div>
+
+  <!-- Market Price Container -->
+  <div id="btd-price" 
+       style="background:#0d1b2a; padding:12px; border-radius:8px; font:600 18px/1.2 system-ui; color:#ffd700; max-width:300px; text-align:center; width:100%;">
+    Market Price: <span>Loading...</span>
+  </div>
+
+</div>
+
+<script>
+const MINT = "6JvXx5usmEHXB3RZjjrk94mcxqAWpFXazSqe9RBSE26z"; // BitDust mint
+
+async function getBtdUsd() {
+  // 1) Try Jupiter API
+  try {
+    const r = await fetch(`https://price.jup.ag/v6/price?ids=${MINT}`);
+    const d = await r.json();
+    const jup = d?.data?.[MINT]?.price;
+    if (jup) return Number(jup);
+  } catch(_) {}
+
+  // 2) Fallback: DexScreener
+  try {
+    const r2 = await fetch(`https://api.dexscreener.com/latest/dex/tokens/${MINT}`);
+    const data = await r2.json();
+    const p = data?.pairs?.[0]?.priceUsd;
+    if (p) return Number(p);
+  } catch(_) {}
+
+  return null;
+}
+
+const el = document.querySelector('#btd-price span');
+async function refresh() {
+  const price = await getBtdUsd();
+  if (!price) {
+    el.textContent = 'n/a';
+    return;
+  }
+  // Show 4 decimals if > 0.01, otherwise 6 decimals
+  el.textContent = price > 0.01 
+    ? `$${price.toFixed(4)}` 
+    : `$${price.toFixed(6)}`;
+}
+refresh();
+setInterval(refresh, 15_000); // auto-refresh every 15s
+</script>
         <div class="copy-note">
           Need to copy? Use the <strong>Copy Contract</strong> button at the top.
         </div>
